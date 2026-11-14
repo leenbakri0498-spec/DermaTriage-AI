@@ -16,8 +16,7 @@ DermaTriage AI is an interactive web application where users upload a single clo
 ## Results
 * **Baseline vs. Model:** Our majority-class baseline scored **66.88% accuracy** on unseen test images, while our Random Forest model achieved **71.87% accuracy** (+4.99%).
 * **Missed Cases vs. False Alarms (Honesty & Safety Check):** Evaluating high-risk lesions (`melanoma`, `basal cell carcinoma`, and `actinic keratoses`) on the 2,005 test images showed **94 high-risk lesions caught**, **298 missed high-risk cases (false negatives)**, and **58 false alarms (false positives)**. Because common moles make up ~67% of the dataset, the image-only model frequently misclassifies high-risk spots as benign moles—proving why our manual ABCDE symptom checkboxes are critical as a human-in-the-loop safety net.
-* **Skin Tone & Image Limitations:** The model struggles on blurry phone photos and darker skin tones due to underrepresentation in `DermaMNIST`.
-
+* **Fairness Audit (Skin Tone, Age & Sex):** Because `DermaMNIST` strips patient `age` and `sex` metadata for anonymization, age and sex parity could not be directly verified on this benchmark. To audit **skin tone and lighting fairness**, we measured the average luminance of surrounding healthy skin border pixels (excluding the `[5:23, 5:23]` center lesion) across all 2,005 test images: the model achieved **70.89% accuracy** on higher-brightness images (`n=1,003`) versus **72.85% accuracy** on lower-brightness images (`n=1,002`), showing a **1.97% performance gap**—though because `DermaMNIST` lacks clinically diverse Fitzpatrick skin-type labels, true demographic skin-tone bias remains a key limitation to test next.
 ![Test Set Confusion Matrix](confusion_matrix.png)
 
 ## What we'd do next
